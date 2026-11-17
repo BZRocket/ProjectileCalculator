@@ -55,80 +55,80 @@
           </div>
           <input id="launchHRange" type="range" min="0" max="3" step="0.01" value="1.5" aria-label="Launch height slider">
         </div>
-
-        <fieldset class="calibration">
-          <legend>Launcher calibration</legend>
-
-          <div class="field">
-            <label for="launchSpeed">Launch speed</label>
-            <div class="control">
-              <input id="launchSpeed" type="number" min="0.01" step="0.01" value="2.8" inputmode="decimal">
-              <span class="unit">m/s</span>
-            </div>
-            <input id="launchSpeedRange" type="range" min="0.5" max="6" step="0.01" value="2.8" aria-label="Launch speed slider">
-          </div>
-
-          <div class="field">
-            <label for="gravY">Vertical acceleration</label>
-            <span class="hint">Gravity adjusted for air resistance. Enter a negative number.</span>
-            <div class="control">
-              <input id="gravY" type="number" max="-0.01" step="0.01" value="-9.6" inputmode="decimal">
-              <span class="unit">m/s²</span>
-            </div>
-            <input id="gravYRange" type="range" min="-20" max="-1" step="0.01" value="-9.6" aria-label="Vertical acceleration slider">
-          </div>
-
-          <div class="field">
-            <label for="dragX">Horizontal acceleration</label>
-            <span class="hint">Air resistance. Enter a negative number, or 0 for none.</span>
-            <div class="control">
-              <input id="dragX" type="number" max="0" step="0.01" value="-0.4" inputmode="decimal">
-              <span class="unit">m/s²</span>
-            </div>
-            <input id="dragXRange" type="range" min="-2" max="0" step="0.01" value="-0.4" aria-label="Horizontal acceleration slider">
-          </div>
-        </fieldset>
       </form>
 
-      <section class="results" aria-live="polite" aria-labelledby="resultsHeading">
-        <h2 id="resultsHeading">Result</h2>
-        <div id="messages" class="messages"></div>
+      <div class="main">
+        <section class="results" aria-live="polite" aria-label="Result">
+          <div id="messages" class="messages"></div>
+          <dl id="answers" class="answers">
+            <div class="answer">
+              <dt>Hoop height</dt>
+              <dd><span id="outHoop">–</span> <small>m</small></dd>
+            </div>
+            <div class="answer">
+              <dt>Distance to bucket</dt>
+              <dd><span id="outBucket">–</span> <small>m</small></dd>
+            </div>
+          </dl>
+        </section>
 
-        <dl id="answers" class="answers">
-          <div class="answer">
-            <dt>Hoop height</dt>
-            <dd><span id="outHoop">–</span> <small>m</small></dd>
-          </div>
-          <div class="answer">
-            <dt>Distance to bucket</dt>
-            <dd><span id="outBucket">–</span> <small>m</small></dd>
-          </div>
-        </dl>
-
-        <details>
-          <summary>Working</summary>
-          <ul class="working" id="working"></ul>
-        </details>
-
-        <details>
-          <summary>Model</summary>
-          <ul class="model">
-            <li>Launch speed <code>v</code> = <span id="cV">2.8</span> m/s</li>
-            <li>Vertical acceleration <code>g</code> = <span id="cG">−9.6</span> m/s² (gravity, adjusted for air resistance)</li>
-            <li>Horizontal acceleration <code>a</code> = <span id="cA">−0.4</span> m/s² (air resistance)</li>
-            <li><code>x(t) = v cos(θ) t + ½ a t²</code></li>
-            <li><code>y(t) = h + v sin(θ) t + ½ g t²</code>, where <code>h</code> is the launch height</li>
-            <li>Hoop: solve <code>x(t) = distance to hoop</code> and take the earlier time, then find <code>y</code> at that time.</li>
-            <li>Bucket: solve <code>y(t) = bucket height</code> and take the later time (the projectile is coming down), then find <code>x</code> at that time.</li>
-          </ul>
-        </details>
-      </section>
-
-      <figure>
-        <svg id="plot" class="plot" viewBox="0 0 640 300" role="img" aria-label="Side view of the predicted trajectory"></svg>
-        <figcaption>Side view, drawn to scale. The hoop and bucket markers are not to size.</figcaption>
-      </figure>
+        <figure>
+          <svg id="plot" class="plot" viewBox="0 0 720 400" role="img" aria-label="Side view of the predicted trajectory"></svg>
+          <figcaption>Side view, drawn to scale. The hoop and bucket markers are not to size.</figcaption>
+        </figure>
+      </div>
     </div>
+
+    <section class="settings" aria-labelledby="settingsHeading">
+      <h2 id="settingsHeading">Launcher calibration</h2>
+      <p class="settings-note">Measured values for your launcher. Change these only if you switch launchers or recalibrate.</p>
+
+      <div class="settings-fields">
+        <div class="sfield">
+          <label for="launchSpeed">Launch speed</label>
+          <div class="control">
+            <input id="launchSpeed" type="number" min="0.01" step="0.01" value="2.8" inputmode="decimal">
+            <span class="unit">m/s</span>
+          </div>
+        </div>
+
+        <div class="sfield">
+          <label for="gravY">Vertical acceleration</label>
+          <div class="control">
+            <input id="gravY" type="number" max="-0.01" step="0.01" value="-9.6" inputmode="decimal">
+            <span class="unit">m/s²</span>
+          </div>
+          <span class="hint">Gravity adjusted for air resistance. Negative.</span>
+        </div>
+
+        <div class="sfield">
+          <label for="dragX">Horizontal acceleration</label>
+          <div class="control">
+            <input id="dragX" type="number" max="0" step="0.01" value="-0.4" inputmode="decimal">
+            <span class="unit">m/s²</span>
+          </div>
+          <span class="hint">Air resistance. Negative, or 0 for none.</span>
+        </div>
+      </div>
+
+      <details>
+        <summary>Working</summary>
+        <ul class="working" id="working"></ul>
+      </details>
+
+      <details>
+        <summary>Model</summary>
+        <ul class="model">
+          <li>Launch speed <code>v</code> = <span id="cV">2.8</span> m/s</li>
+          <li>Vertical acceleration <code>g</code> = <span id="cG">−9.6</span> m/s²</li>
+          <li>Horizontal acceleration <code>a</code> = <span id="cA">−0.4</span> m/s²</li>
+          <li><code>x(t) = v cos(θ) t + ½ a t²</code></li>
+          <li><code>y(t) = h + v sin(θ) t + ½ g t²</code>, where <code>h</code> is the launch height</li>
+          <li>Hoop: solve <code>x(t) = distance to hoop</code> and take the earlier time, then find <code>y</code> at that time.</li>
+          <li>Bucket: solve <code>y(t) = bucket height</code> and take the later time (the projectile is coming down), then find <code>x</code> at that time.</li>
+        </ul>
+      </details>
+    </section>
   </div>
 
   <script>
@@ -184,37 +184,79 @@
     }
 
     function drawPlot(r, d, hb, h) {
-      const W = 640, H = 300, pad = 30;
-      const pts = [];
-      const N = 80;
+      const W = 720, H = 400, padX = 40, padTop = 40, padBottom = 44;
+      const N = 300;
+
+      // trajectory in metres
+      const raw = [];
       let yMax = Math.max(h, r.hoopY, hb);
       for (let i = 0; i <= N; i++) {
         const p = position(r.tBucket * i / N, r.vx, r.vy, h);
-        pts.push(p);
+        raw.push(p);
         yMax = Math.max(yMax, p.y);
       }
       const xMax = Math.max(r.bucketX, d, 0.1) * 1.08;
       const yTop = Math.max(yMax, 0.1) * 1.15;
-      const s = Math.min((W - 2 * pad) / xMax, (H - 2 * pad) / yTop);
-      const ox = pad, oy = H - pad;
-      const X = (x) => (ox + x * s).toFixed(1);
-      const Y = (y) => (oy - y * s).toFixed(1);
+      const s = Math.min((W - 2 * padX) / xMax, (H - padTop - padBottom) / yTop);
+      const ox = padX, oy = H - padBottom;
+      const PX = (x) => ox + x * s;
+      const PY = (y) => oy - y * s;
+      const f = (n) => n.toFixed(1);
 
-      const path = pts.map((p, i) => (i ? 'L' : 'M') + X(p.x) + ',' + Y(p.y)).join(' ');
-      const bx = +X(r.bucketX), by = +Y(hb);
-      const hx = +X(d), hy = +Y(r.hoopY);
+      // trajectory, hoop, bucket and launcher in pixels
+      const pts = raw.map((p) => ({ x: PX(p.x), y: PY(p.y) }));
+      const lx = PX(0), ly = PY(h);
+      const hx = PX(d), hy = PY(r.hoopY);
+      const bx = PX(r.bucketX), by = PY(hb);
+
+      // Things a label must stay clear of: markers, ground line, and the path itself.
+      const boxes = [
+        { x0: lx - 8, y0: ly - 8, x1: lx + 8, y1: ly + 8 },
+        { x0: lx - 3, y0: ly, x1: lx + 3, y1: oy },
+        { x0: hx - 6, y0: hy - 19, x1: hx + 6, y1: hy + 19 },
+        { x0: bx - 17, y0: by - 3, x1: bx + 17, y1: oy + 2 },
+        { x0: 0, y0: oy - 3, x1: W, y1: oy + 3 }
+      ];
+      const overlap = (a, b) => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+
+      // Try spots around the anchor, nearest first, and take the first one that
+      // touches neither the path nor any marker. Skips the label if none is clear.
+      function placeLabel(text, ax, ay, angles) {
+        const w = text.length * 7.4 + 4, hgt = 18;
+        for (const rad of [16, 26, 38, 54, 74]) {
+          for (const deg of angles) {
+            const a = deg * Math.PI / 180;
+            const cos = Math.cos(a);
+            const cx = ax + rad * cos, cy = ay - rad * Math.sin(a);
+            const anchor = cos > 0.35 ? 'start' : cos < -0.35 ? 'end' : 'middle';
+            const x0 = anchor === 'start' ? cx : anchor === 'end' ? cx - w : cx - w / 2;
+            const box = { x0, y0: cy - hgt / 2, x1: x0 + w, y1: cy + hgt / 2 };
+            if (box.x0 < 2 || box.x1 > W - 2 || box.y0 < 2 || box.y1 > H - 2) continue;
+            if (boxes.some((b) => overlap(box, b))) continue;
+            if (pts.some((p) => p.x > box.x0 - 5 && p.x < box.x1 + 5 && p.y > box.y0 - 5 && p.y < box.y1 + 5)) continue;
+            boxes.push(box);
+            return `<text x="${f(cx)}" y="${f(cy + 4.5)}" text-anchor="${anchor}">${text}</text>`;
+          }
+        }
+        return '';
+      }
+
+      const labels =
+        placeLabel('launcher', lx, ly, [-45, 0, -90, 45, -135, 180, 90, 135]) +
+        placeLabel('hoop', hx, hy, [90, 45, 135, 0, 180, -45, -135, -90]) +
+        placeLabel('bucket', bx, by, [45, 0, 90, 135, 180, -45, -135, -90]);
+
+      const path = pts.map((p, i) => (i ? 'L' : 'M') + f(p.x) + ',' + f(p.y)).join(' ');
 
       $('plot').innerHTML = `
-        <line class="ground" x1="${ox}" y1="${oy}" x2="${W - pad / 2}" y2="${oy}"/>
-        <line class="guide" x1="${X(0)}" y1="${Y(h)}" x2="${X(0)}" y2="${oy}"/>
+        <line class="ground" x1="${ox}" y1="${f(oy)}" x2="${W - padX / 2}" y2="${f(oy)}"/>
+        <line class="guide" x1="${f(lx)}" y1="${f(ly)}" x2="${f(lx)}" y2="${f(oy)}"/>
         <path class="path" d="${path}"/>
-        <path class="bucket" d="M${bx - 15},${by} L${bx - 11},${oy} L${bx + 11},${oy} L${bx + 15},${by}"/>
-        <line class="hoop" x1="${hx}" y1="${hy - 16}" x2="${hx}" y2="${hy + 16}"/>
-        <circle class="dot" cx="${X(0)}" cy="${Y(h)}" r="5"/>
-        <circle class="dot" cx="${hx}" cy="${hy}" r="3.5"/>
-        <text x="${+X(0) + 8}" y="${+Y(h) - 8}">launcher</text>
-        <text x="${hx + 8}" y="${hy - 20}">hoop</text>
-        <text x="${bx}" y="${by - 8}" text-anchor="middle">bucket</text>`;
+        <path class="bucket" d="M${f(bx - 15)},${f(by)} L${f(bx - 11)},${f(oy)} L${f(bx + 11)},${f(oy)} L${f(bx + 15)},${f(by)}"/>
+        <line class="hoop" x1="${f(hx)}" y1="${f(hy - 16)}" x2="${f(hx)}" y2="${f(hy + 16)}"/>
+        <circle class="dot" cx="${f(lx)}" cy="${f(ly)}" r="5"/>
+        <circle class="dot" cx="${f(hx)}" cy="${f(hy)}" r="3.5"/>
+        ${labels}`;
     }
 
     function clearOutputs() {
@@ -226,7 +268,7 @@
 
     function showMessages(list, isError) {
       $('messages').innerHTML = list
-        .map((m) => `<p class="msg${isError ? ' error' : ''}"></p>`)
+        .map(() => `<p class="msg${isError ? ' error' : ''}"></p>`)
         .join('');
       $('messages').querySelectorAll('.msg').forEach((el, i) => { el.textContent = list[i]; });
     }
@@ -284,12 +326,13 @@
     }
 
     // keep each slider and its number box in step
-    ['angle', 'hoopDist', 'bucketH', 'launchH', 'launchSpeed', 'gravY', 'dragX'].forEach((id) => {
+    ['angle', 'hoopDist', 'bucketH', 'launchH'].forEach((id) => {
       const box = $(id), slider = $(id + 'Range');
       box.addEventListener('input', () => { slider.value = box.value; });
       slider.addEventListener('input', () => { box.value = slider.value; });
     });
-    $('inputs').addEventListener('input', update);
+    // inputs and calibration fields live in different places, so listen on the page
+    document.addEventListener('input', update);
     $('inputs').addEventListener('submit', (e) => e.preventDefault());
     update();
   </script>
