@@ -3,7 +3,7 @@
   --bg: #11151b;
   --ink: #e7eaf0;
   --ink-soft: #98a3b3;
-  --pen: #9000ff;
+  --pen: #7fa9ff;
   --hair: #323b48;
   --warn: #f0b35a;
   --error: #ff8f86;
@@ -185,4 +185,19 @@ svg.plot {
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+/* ---------- launcher calibration ---------- */
+fieldset.calibration {
+  margin: 0;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  min-width: 0;
+}
+
+fieldset.calibration legend {
+  padding: 0 12px 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
