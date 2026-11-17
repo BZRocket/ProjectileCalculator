@@ -209,6 +209,23 @@ svg.plot {
 
 .model code, .working code { font-family: inherit; font-style: italic; }
 
+/* ---------- footer ---------- */
+.site-footer {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.site-footer a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; }
 }
