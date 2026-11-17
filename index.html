@@ -1,64 +1,247 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    li.li3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    li.li6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
-    li.li7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Menlo; -webkit-text-stroke: #000000}
-    span.s1 {font-kerning: none}
-    span.s2 {font: 10.0px Times; font-kerning: none}
-    span.s3 {-webkit-text-stroke: 0px #000000}
-    span.s4 {font: 13.0px Menlo; font-kerning: none}
-    span.s5 {font: 12.0px Times; font-kerning: none}
-    ul.ul1 {list-style-type: disc}
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hoop and bucket launcher calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>Hoop and bucket launcher</b></span></h1>
-<p class="p2"><span class="s1">Enter the launch angle, how far away the hoop is and how high the bucket sits. You get the hoop height to aim through and how far away to place the bucket.</span></p>
-<p class="p3"><span class="s1">Launch angle 10° to 50°</span></p>
-<p class="p3"><span class="s1">degrees</span></p>
-<p class="p3"><span class="s1">Distance to hoop Horizontal, from the launcher to the hoop</span></p>
-<p class="p3"><span class="s1">m</span></p>
-<p class="p3"><span class="s1">Bucket height Height of the bucket opening above the floor</span></p>
-<p class="p3"><span class="s1">m</span></p>
-<p class="p3"><span class="s1">Launch height Height of the launcher exit above the floor</span></p>
-<p class="p3"><span class="s1">m</span></p>
-<p class="p3"><span class="s1">Launcher calibration</span></p>
-<p class="p3"><span class="s1">Launch speed</span></p>
-<p class="p3"><span class="s1">m/s</span></p>
-<p class="p3"><span class="s1">Vertical acceleration Gravity adjusted for air resistance. Enter a negative number.</span></p>
-<p class="p3"><span class="s1">m/s²</span></p>
-<p class="p3"><span class="s1">Horizontal acceleration Air resistance. Enter a negative number, or 0 for none.</span></p>
-<p class="p3"><span class="s1">m/s²</span></p>
-<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>Result</b></span></h2>
-<p class="p5"><span class="s1"></span><br></p>
-<p class="p3"><span class="s1">Hoop height</span></p>
-<p class="p3"><span class="s1">– </span><span class="s2">m</span></p>
-<p class="p3"><span class="s1">Distance to bucket</span></p>
-<p class="p3"><span class="s1">– </span><span class="s2">m</span></p>
-<p class="p3"><span class="s1">Working</span></p>
-<ul class="ul1">
-  <li class="li6"></li>
-</ul>
-<p class="p3"><span class="s1">Model</span></p>
-<ul class="ul1">
-  <li class="li3"><span class="s3"></span><span class="s1">Launch speed </span><span class="s4">v</span><span class="s1"> = 2.8 m/s</span></li>
-  <li class="li3"><span class="s3"></span><span class="s1">Vertical acceleration </span><span class="s4">g</span><span class="s1"> = −9.6 m/s² (gravity, adjusted for air resistance)</span></li>
-  <li class="li3"><span class="s3"></span><span class="s1">Horizontal acceleration </span><span class="s4">a</span><span class="s1"> = −0.4 m/s² (air resistance)</span></li>
-  <li class="li7"><span class="s3"></span><span class="s1">x(t) = v cos(θ) t + ½ a t²</span></li>
-  <li class="li7"><span class="s3"></span><span class="s1">y(t) = h + v sin(θ) t + ½ g t²</span><span class="s5">, where </span><span class="s1">h</span><span class="s5"> is the launch height</span></li>
-  <li class="li3"><span class="s3"></span><span class="s1">Hoop: solve </span><span class="s4">x(t) = distance to hoop</span><span class="s1"> and take the earlier time, then find </span><span class="s4">y</span><span class="s1"> at that time.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s1">Bucket: solve </span><span class="s4">y(t) = bucket height</span><span class="s1"> and take the later time (the projectile is coming down), then find </span><span class="s4">x</span><span class="s1"> at that time.</span></li>
-</ul>
-<p class="p3"><span class="s1">Side view, drawn to scale. The hoop and bucket markers are not to size.</span></p>
+  <div class="page">
+    <h1>Hoop and bucket launcher</h1>
+    <p class="lede">Enter the launch angle, how far away the hoop is and how high the bucket sits. You get the hoop height to aim through and how far away to place the bucket.</p>
+
+    <div class="layout">
+      <form id="inputs" novalidate autocomplete="off">
+        <div class="field">
+          <label for="angle">Launch angle</label>
+          <span class="hint">10° to 50°</span>
+          <div class="control">
+            <input id="angle" type="number" min="10" max="50" step="0.5" value="30" inputmode="decimal">
+            <span class="unit">degrees</span>
+          </div>
+          <input id="angleRange" type="range" min="10" max="50" step="0.5" value="30" aria-label="Launch angle slider">
+        </div>
+
+        <div class="field">
+          <label for="hoopDist">Distance to hoop</label>
+          <span class="hint">Horizontal, from the launcher to the hoop</span>
+          <div class="control">
+            <input id="hoopDist" type="number" min="0" step="0.01" value="0.75" inputmode="decimal">
+            <span class="unit">m</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bucketH">Bucket height</label>
+          <span class="hint">Height of the bucket opening above the floor</span>
+          <div class="control">
+            <input id="bucketH" type="number" min="0" step="0.01" value="0.3" inputmode="decimal">
+            <span class="unit">m</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="launchH">Launch height</label>
+          <span class="hint">Height of the launcher exit above the floor</span>
+          <div class="control">
+            <input id="launchH" type="number" min="0" step="0.01" value="1.5" inputmode="decimal">
+            <span class="unit">m</span>
+          </div>
+        </div>
+      </form>
+
+      <section class="results" aria-live="polite" aria-labelledby="resultsHeading">
+        <h2 id="resultsHeading">Result</h2>
+        <div id="messages" class="messages"></div>
+
+        <dl id="answers" class="answers">
+          <div class="answer">
+            <dt>Hoop height</dt>
+            <dd><span id="outHoop">–</span> <small>m</small></dd>
+          </div>
+          <div class="answer">
+            <dt>Distance to bucket</dt>
+            <dd><span id="outBucket">–</span> <small>m</small></dd>
+          </div>
+        </dl>
+
+        <details>
+          <summary>Working</summary>
+          <ul class="working" id="working"></ul>
+        </details>
+
+        <details>
+          <summary>Model</summary>
+          <ul class="model">
+            <li>Launch speed <code>v</code> = <span id="cV">2.8</span> m/s</li>
+            <li>Vertical acceleration <code>g</code> = <span id="cG">−9.6</span> m/s² (gravity, adjusted for air resistance)</li>
+            <li>Horizontal acceleration <code>a</code> = <span id="cA">−0.4</span> m/s² (air resistance)</li>
+            <li><code>x(t) = v cos(θ) t + ½ a t²</code></li>
+            <li><code>y(t) = h + v sin(θ) t + ½ g t²</code>, where <code>h</code> is the launch height</li>
+            <li>Hoop: solve <code>x(t) = distance to hoop</code> and take the earlier time, then find <code>y</code> at that time.</li>
+            <li>Bucket: solve <code>y(t) = bucket height</code> and take the later time (the projectile is coming down), then find <code>x</code> at that time.</li>
+          </ul>
+        </details>
+      </section>
+
+      <figure>
+        <svg id="plot" class="plot" viewBox="0 0 640 300" role="img" aria-label="Side view of the predicted trajectory"></svg>
+        <figcaption>Side view, drawn to scale. The hoop and bucket markers are not to size.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    // Measured values for this setup. Change them here if you re-measure.
+    const V0 = 2.8;   // launch speed, m/s
+    const GY = -9.6;  // y acceleration (gravity adjusted for air resistance), m/s^2
+    const AX = -0.4;  // x acceleration (air resistance), m/s^2
+
+    const $ = (id) => document.getElementById(id);
+    const fmt = (n) => n.toFixed(3);
+
+    $('cV').textContent = V0;
+    $('cG').textContent = String(GY).replace('-', '−');
+    $('cA').textContent = String(AX).replace('-', '−');
+
+    const position = (t, vx, vy, h) => ({
+      x: vx * t + 0.5 * AX * t * t,
+      y: h + vy * t + 0.5 * GY * t * t
+    });
+
+    function solve(angleDeg, d, hb, h) {
+      const th = angleDeg * Math.PI / 180;
+      const vx = V0 * Math.cos(th);
+      const vy = V0 * Math.sin(th);
+      const notes = [];
+
+      // Hoop: 0.5*AX*t^2 + vx*t - d = 0  -> earlier root
+      const discX = vx * vx + 2 * AX * d;
+      if (discX < 0) {
+        const maxX = -(vx * vx) / (2 * AX);
+        return { error: `The projectile never gets ${d} m away horizontally at this angle. Its farthest reach is ${fmt(maxX)} m.` };
+      }
+      const tHoop = (-vx + Math.sqrt(discX)) / AX;
+      const hoop = position(tHoop, vx, vy, h);
+
+      // Bucket: 0.5*GY*t^2 + vy*t + (h - hb) = 0  -> later root
+      const discY = vy * vy - 2 * GY * (h - hb);
+      if (discY < 0) {
+        return { error: 'The projectile never reaches the bucket height at this angle and launch height.' };
+      }
+      const tBucket = (-vy - Math.sqrt(discY)) / GY;
+      const bucket = position(tBucket, vx, vy, h);
+
+      if (tBucket > vx / -AX) {
+        notes.push('The bucket time is long enough that the model has the horizontal velocity reversing. Treat the bucket distance with caution.');
+      }
+      if (tHoop >= tBucket) {
+        notes.push('The hoop is farther than the bucket. The projectile lands before reaching the hoop.');
+      }
+      if (hoop.y < 0) {
+        notes.push('The required hoop height is below the floor.');
+      }
+      return { vx, vy, tHoop, tBucket, hoopY: hoop.y, bucketX: bucket.x, notes };
+    }
+
+    function drawPlot(r, d, hb, h) {
+      const W = 640, H = 300, pad = 30;
+      const pts = [];
+      const N = 80;
+      let yMax = Math.max(h, r.hoopY, hb);
+      for (let i = 0; i <= N; i++) {
+        const p = position(r.tBucket * i / N, r.vx, r.vy, h);
+        pts.push(p);
+        yMax = Math.max(yMax, p.y);
+      }
+      const xMax = Math.max(r.bucketX, d, 0.1) * 1.08;
+      const yTop = Math.max(yMax, 0.1) * 1.15;
+      const s = Math.min((W - 2 * pad) / xMax, (H - 2 * pad) / yTop);
+      const ox = pad, oy = H - pad;
+      const X = (x) => (ox + x * s).toFixed(1);
+      const Y = (y) => (oy - y * s).toFixed(1);
+
+      const path = pts.map((p, i) => (i ? 'L' : 'M') + X(p.x) + ',' + Y(p.y)).join(' ');
+      const bx = +X(r.bucketX), by = +Y(hb);
+      const hx = +X(d), hy = +Y(r.hoopY);
+
+      $('plot').innerHTML = `
+        <line class="ground" x1="${ox}" y1="${oy}" x2="${W - pad / 2}" y2="${oy}"/>
+        <line class="guide" x1="${X(0)}" y1="${Y(h)}" x2="${X(0)}" y2="${oy}"/>
+        <path class="path" d="${path}"/>
+        <path class="bucket" d="M${bx - 15},${by} L${bx - 11},${oy} L${bx + 11},${oy} L${bx + 15},${by}"/>
+        <line class="hoop" x1="${hx}" y1="${hy - 16}" x2="${hx}" y2="${hy + 16}"/>
+        <circle class="dot" cx="${X(0)}" cy="${Y(h)}" r="5"/>
+        <circle class="dot" cx="${hx}" cy="${hy}" r="3.5"/>
+        <text x="${+X(0) + 8}" y="${+Y(h) - 8}">launcher</text>
+        <text x="${hx + 8}" y="${hy - 20}">hoop</text>
+        <text x="${bx}" y="${by - 8}" text-anchor="middle">bucket</text>`;
+    }
+
+    function clearOutputs() {
+      $('outHoop').textContent = '–';
+      $('outBucket').textContent = '–';
+      $('working').innerHTML = '';
+      $('plot').innerHTML = '';
+    }
+
+    function showMessages(list, isError) {
+      $('messages').innerHTML = list
+        .map((m) => `<p class="msg${isError ? ' error' : ''}"></p>`)
+        .join('');
+      $('messages').querySelectorAll('.msg').forEach((el, i) => { el.textContent = list[i]; });
+    }
+
+    function update() {
+      const angle = parseFloat($('angle').value);
+      const d = parseFloat($('hoopDist').value);
+      const hb = parseFloat($('bucketH').value);
+      const h = parseFloat($('launchH').value);
+
+      const problems = [];
+      const bad = (id, cond, text) => {
+        $(id).setAttribute('aria-invalid', cond ? 'true' : 'false');
+        if (cond) problems.push(text);
+      };
+      bad('angle', !(angle >= 10 && angle <= 50), 'Enter a launch angle between 10° and 50°.');
+      bad('hoopDist', !(d > 0), 'Enter a hoop distance greater than 0 m.');
+      bad('bucketH', !(hb >= 0), 'Enter a bucket height of 0 m or more.');
+      bad('launchH', !(h >= 0), 'Enter a launch height of 0 m or more.');
+
+      if (problems.length) {
+        clearOutputs();
+        showMessages(problems, true);
+        return;
+      }
+
+      const r = solve(angle, d, hb, h);
+      if (r.error) {
+        clearOutputs();
+        showMessages([r.error], true);
+        return;
+      }
+
+      showMessages(r.notes, false);
+      $('outHoop').textContent = fmt(r.hoopY);
+      $('outBucket').textContent = fmt(r.bucketX);
+      $('working').innerHTML = `
+        <li>Horizontal launch speed: ${fmt(r.vx)} m/s</li>
+        <li>Vertical launch speed: ${fmt(r.vy)} m/s</li>
+        <li>Time at hoop: ${fmt(r.tHoop)} s</li>
+        <li>Time at bucket: ${fmt(r.tBucket)} s</li>`;
+      drawPlot(r, d, hb, h);
+    }
+
+    // keep the angle slider and number box in step
+    $('angle').addEventListener('input', () => { $('angleRange').value = $('angle').value; });
+    $('angleRange').addEventListener('input', () => { $('angle').value = $('angleRange').value; });
+    $('inputs').addEventListener('input', update);
+    $('inputs').addEventListener('submit', (e) => e.preventDefault());
+    update();
+  </script>
 </body>
 </html>
