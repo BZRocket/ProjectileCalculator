@@ -1,12 +1,12 @@
 :root {
-  --paper: #f8fafc;
-  --rule: #cfdcec;
-  --margin: #e58a8a;
-  --ink: #1b2430;
-  --ink-soft: #536174;
-  --pen: #1f4fbf;
-  --warn: #9a4b00;
-  --error: #b3261e;
+  color-scheme: dark;
+  --bg: #11151b;
+  --ink: #e7eaf0;
+  --ink-soft: #98a3b3;
+  --pen: #7fa9ff;
+  --hair: #323b48;
+  --warn: #f0b35a;
+  --error: #ff8f86;
   --line: 28px;
 }
 
@@ -16,43 +16,24 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  min-height: 100vh;
   color: var(--ink);
+  background: var(--bg);
   font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 1rem;
-  line-height: var(--line);
-  background-color: var(--paper);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent calc(var(--line) - 1px),
-    var(--rule) calc(var(--line) - 1px),
-    var(--rule) var(--line)
-  );
-  background-position: 0 14px;
-  min-height: 100vh;
-}
-
-/* the red margin rule, as on the original sheet */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0 auto 0 clamp(14px, 6vw, 72px);
-  width: 2px;
-  background: var(--margin);
-  opacity: 0.75;
-  pointer-events: none;
+  line-height: 1.6;
 }
 
 .page {
   max-width: 62rem;
   margin: 0 auto;
-  padding: 28px 20px 56px calc(clamp(14px, 6vw, 72px) + 22px);
+  padding: 32px 20px 56px;
 }
 
 h1 {
   font-size: clamp(1.7rem, 4vw, 2.4rem);
-  line-height: 56px;
-  margin: 0;
+  line-height: 1.2;
+  margin: 0 0 12px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -60,12 +41,12 @@ h1 {
 h2 {
   font-size: 1.05rem;
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 8px;
 }
 
 p { margin: 0; }
 
-.lede { color: var(--ink-soft); max-width: 40rem; margin-bottom: 28px; }
+.lede { color: var(--ink-soft); max-width: 40rem; margin-bottom: 32px; }
 
 .layout {
   display: grid;
@@ -81,17 +62,14 @@ p { margin: 0; }
 /* ---------- inputs ---------- */
 .field { margin-bottom: 28px; }
 
-.field label {
-  display: block;
-  font-weight: 500;
-}
+.field label { display: block; font-weight: 500; }
 
 .field .hint {
   display: block;
   font-size: 0.85rem;
   color: var(--ink-soft);
-  line-height: 20px;
-  margin-bottom: 4px;
+  line-height: 1.4;
+  margin-bottom: 6px;
 }
 
 .control {
@@ -108,12 +86,13 @@ input[type="number"] {
   color: var(--pen);
   background: transparent;
   border: 0;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink-soft);
   border-radius: 0;
   padding: 0 2px;
   height: var(--line);
-  line-height: var(--line);
 }
+
+input[type="number"]:focus { border-bottom-color: var(--pen); }
 
 input[type="number"]:focus-visible,
 input[type="range"]:focus-visible,
@@ -127,22 +106,23 @@ input[aria-invalid="true"] { border-bottom-color: var(--error); }
 .unit { color: var(--ink-soft); }
 
 input[type="range"] {
+  display: block;
   width: 100%;
-  margin: 6px 0 0;
+  margin: 10px 0 0;
   accent-color: var(--pen);
 }
 
 /* ---------- results ---------- */
 .results { margin-bottom: 28px; }
 
-.answers { margin: 0; padding: 0; }
+.answers { margin: 0 0 16px; padding: 0; }
 
 .answer {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0 18px;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .answer dt { min-width: 12rem; font-weight: 500; }
@@ -150,7 +130,7 @@ input[type="range"] {
 .answer dd {
   margin: 0;
   font-size: 2.1rem;
-  line-height: 56px;
+  line-height: 1.5;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--pen);
@@ -180,19 +160,22 @@ details > :not(summary) { margin-top: 6px; }
 
 .model li { margin-bottom: 6px; }
 
-.model code, .working code {
-  font-family: inherit;
-  font-style: italic;
-}
+.model code, .working code { font-family: inherit; font-style: italic; }
 
 /* ---------- plot ---------- */
 figure { margin: 0 0 28px; grid-column: 1 / -1; }
 
-figcaption { font-size: 0.85rem; color: var(--ink-soft); line-height: 20px; margin-top: 6px; }
+figcaption { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.4; margin-top: 6px; }
 
-svg.plot { display: block; width: 100%; height: auto; background: rgba(248, 250, 252, 0.88); }
+svg.plot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
 
-.plot .ground { stroke: var(--ink); stroke-width: 2; }
+.plot .ground { stroke: var(--ink-soft); stroke-width: 2; }
 .plot .path { fill: none; stroke: var(--pen); stroke-width: 2.5; stroke-linecap: round; }
 .plot .hoop { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
 .plot .bucket { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
@@ -202,4 +185,19 @@ svg.plot { display: block; width: 100%; height: auto; background: rgba(248, 250,
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+/* ---------- launcher calibration ---------- */
+fieldset.calibration {
+  margin: 0;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  min-width: 0;
+}
+
+fieldset.calibration legend {
+  padding: 0 12px 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
