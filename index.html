@@ -33,6 +33,7 @@
             <input id="hoopDist" type="number" min="0" step="0.01" value="0.75" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="hoopDistRange" type="range" min="0.05" max="3" step="0.01" value="0.75" aria-label="Distance to hoop slider">
         </div>
 
         <div class="field">
@@ -42,6 +43,7 @@
             <input id="bucketH" type="number" min="0" step="0.01" value="0.3" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="bucketHRange" type="range" min="0" max="2" step="0.01" value="0.3" aria-label="Bucket height slider">
         </div>
 
         <div class="field">
@@ -51,6 +53,7 @@
             <input id="launchH" type="number" min="0" step="0.01" value="1.5" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="launchHRange" type="range" min="0" max="3" step="0.01" value="1.5" aria-label="Launch height slider">
         </div>
       </form>
 
@@ -236,9 +239,12 @@
       drawPlot(r, d, hb, h);
     }
 
-    // keep the angle slider and number box in step
-    $('angle').addEventListener('input', () => { $('angleRange').value = $('angle').value; });
-    $('angleRange').addEventListener('input', () => { $('angle').value = $('angleRange').value; });
+    // keep each slider and its number box in step
+    ['angle', 'hoopDist', 'bucketH', 'launchH'].forEach((id) => {
+      const box = $(id), slider = $(id + 'Range');
+      box.addEventListener('input', () => { slider.value = box.value; });
+      slider.addEventListener('input', () => { box.value = slider.value; });
+    });
     $('inputs').addEventListener('input', update);
     $('inputs').addEventListener('submit', (e) => e.preventDefault());
     update();
