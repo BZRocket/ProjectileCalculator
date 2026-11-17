@@ -33,6 +33,7 @@
             <input id="hoopDist" type="number" min="0" step="0.01" value="0.75" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="hoopDistRange" type="range" min="0.05" max="3" step="0.01" value="0.75" aria-label="Distance to hoop slider">
         </div>
 
         <div class="field">
@@ -42,6 +43,7 @@
             <input id="bucketH" type="number" min="0" step="0.01" value="0.3" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="bucketHRange" type="range" min="0" max="2" step="0.01" value="0.3" aria-label="Bucket height slider">
         </div>
 
         <div class="field">
@@ -51,7 +53,41 @@
             <input id="launchH" type="number" min="0" step="0.01" value="1.5" inputmode="decimal">
             <span class="unit">m</span>
           </div>
+          <input id="launchHRange" type="range" min="0" max="3" step="0.01" value="1.5" aria-label="Launch height slider">
         </div>
+
+        <fieldset class="calibration">
+          <legend>Launcher calibration</legend>
+
+          <div class="field">
+            <label for="launchSpeed">Launch speed</label>
+            <div class="control">
+              <input id="launchSpeed" type="number" min="0.01" step="0.01" value="2.8" inputmode="decimal">
+              <span class="unit">m/s</span>
+            </div>
+            <input id="launchSpeedRange" type="range" min="0.5" max="6" step="0.01" value="2.8" aria-label="Launch speed slider">
+          </div>
+
+          <div class="field">
+            <label for="gravY">Vertical acceleration</label>
+            <span class="hint">Gravity adjusted for air resistance. Enter a negative number.</span>
+            <div class="control">
+              <input id="gravY" type="number" max="-0.01" step="0.01" value="-9.6" inputmode="decimal">
+              <span class="unit">m/s²</span>
+            </div>
+            <input id="gravYRange" type="range" min="-20" max="-1" step="0.01" value="-9.6" aria-label="Vertical acceleration slider">
+          </div>
+
+          <div class="field">
+            <label for="dragX">Horizontal acceleration</label>
+            <span class="hint">Air resistance. Enter a negative number, or 0 for none.</span>
+            <div class="control">
+              <input id="dragX" type="number" max="0" step="0.01" value="-0.4" inputmode="decimal">
+              <span class="unit">m/s²</span>
+            </div>
+            <input id="dragXRange" type="range" min="-2" max="0" step="0.01" value="-0.4" aria-label="Horizontal acceleration slider">
+          </div>
+        </fieldset>
       </form>
 
       <section class="results" aria-live="polite" aria-labelledby="resultsHeading">
@@ -96,17 +132,15 @@
   </div>
 
   <script>
-    // Measured values for this setup. Change them here if you re-measure.
-    const V0 = 2.8;   // launch speed, m/s
-    const GY = -9.6;  // y acceleration (gravity adjusted for air resistance), m/s^2
-    const AX = -0.4;  // x acceleration (air resistance), m/s^2
+    // Model parameters. They start at the values you measured and are read
+    // from the Launcher calibration fields every time something changes.
+    let V0 = 2.8;   // launch speed, m/s
+    let GY = -9.6;  // y acceleration (gravity adjusted for air resistance), m/s^2
+    let AX = -0.4;  // x acceleration (air resistance), m/s^2
 
     const $ = (id) => document.getElementById(id);
     const fmt = (n) => n.toFixed(3);
-
-    $('cV').textContent = V0;
-    $('cG').textContent = String(GY).replace('-', '−');
-    $('cA').textContent = String(AX).replace('-', '−');
+    const minus = (n) => String(n).replace('-', '−');
 
     const position = (t, vx, vy, h) => ({
       x: vx * t + 0.5 * AX * t * t,
@@ -120,12 +154,13 @@
       const notes = [];
 
       // Hoop: 0.5*AX*t^2 + vx*t - d = 0  -> earlier root
+      // (with AX = 0 there is no horizontal drag and the equation is just x = vx*t)
       const discX = vx * vx + 2 * AX * d;
       if (discX < 0) {
         const maxX = -(vx * vx) / (2 * AX);
         return { error: `The projectile never gets ${d} m away horizontally at this angle. Its farthest reach is ${fmt(maxX)} m.` };
       }
-      const tHoop = (-vx + Math.sqrt(discX)) / AX;
+      const tHoop = AX === 0 ? d / vx : (-vx + Math.sqrt(discX)) / AX;
       const hoop = position(tHoop, vx, vy, h);
 
       // Bucket: 0.5*GY*t^2 + vy*t + (h - hb) = 0  -> later root
@@ -136,7 +171,7 @@
       const tBucket = (-vy - Math.sqrt(discY)) / GY;
       const bucket = position(tBucket, vx, vy, h);
 
-      if (tBucket > vx / -AX) {
+      if (AX < 0 && tBucket > vx / -AX) {
         notes.push('The bucket time is long enough that the model has the horizontal velocity reversing. Treat the bucket distance with caution.');
       }
       if (tHoop >= tBucket) {
@@ -212,11 +247,23 @@
       bad('bucketH', !(hb >= 0), 'Enter a bucket height of 0 m or more.');
       bad('launchH', !(h >= 0), 'Enter a launch height of 0 m or more.');
 
+      const v = parseFloat($('launchSpeed').value);
+      const g = parseFloat($('gravY').value);
+      const a = parseFloat($('dragX').value);
+      bad('launchSpeed', !(v > 0), 'Enter a launch speed greater than 0 m/s.');
+      bad('gravY', !(g < 0), 'Enter a negative vertical acceleration.');
+      bad('dragX', !(a <= 0), 'Enter a horizontal acceleration of 0 or less.');
+
       if (problems.length) {
         clearOutputs();
         showMessages(problems, true);
         return;
       }
+
+      V0 = v; GY = g; AX = a;
+      $('cV').textContent = V0;
+      $('cG').textContent = minus(GY);
+      $('cA').textContent = minus(AX);
 
       const r = solve(angle, d, hb, h);
       if (r.error) {
@@ -236,9 +283,12 @@
       drawPlot(r, d, hb, h);
     }
 
-    // keep the angle slider and number box in step
-    $('angle').addEventListener('input', () => { $('angleRange').value = $('angle').value; });
-    $('angleRange').addEventListener('input', () => { $('angle').value = $('angleRange').value; });
+    // keep each slider and its number box in step
+    ['angle', 'hoopDist', 'bucketH', 'launchH', 'launchSpeed', 'gravY', 'dragX'].forEach((id) => {
+      const box = $(id), slider = $(id + 'Range');
+      box.addEventListener('input', () => { slider.value = box.value; });
+      slider.addEventListener('input', () => { box.value = slider.value; });
+    });
     $('inputs').addEventListener('input', update);
     $('inputs').addEventListener('submit', (e) => e.preventDefault());
     update();
